@@ -1,0 +1,31 @@
+{
+    "name": "laborci/eternity",
+    "description": "Eternity framework",
+    "keywords": [],
+    "license" : "MIT",
+    "authors" : [
+        {
+            "name": "Gergely Laborci",
+            "email": "gergely@laborci.hu"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.3",
+        "symfony/http-foundation": "^3.3",
+        "psr/log": "^1.0",
+        "nabil1337/case-helper": "^0.1.0",
+        "twig/twig":"^2.0",
+        "riimu/kit-phpencoder": "^2.3",
+        "minime/annotations": "~3.0",
+        "symfony/debug": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eternity\\": "src/Eternity",
+            "RedFox\\": "src/RedFox",
+            "GMark\\": "src/GMark",
+            "Codex\\": "src/Codex"
+        }
+    }
+
+}
