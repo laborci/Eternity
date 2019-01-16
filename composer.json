@@ -1,6 +1,6 @@
 {
     "name": "laborci/eternity",
-    "description": "Eternity framework",
+    "description": "Eternity",
     "keywords": [],
     "license" : "MIT",
     "authors" : [
@@ -27,5 +27,4 @@
             "Codex\\": "src/Codex"
         }
     }
-
 }
