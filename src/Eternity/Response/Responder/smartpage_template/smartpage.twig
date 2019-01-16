@@ -1,0 +1,23 @@
+{% spaceless %}
+<!doctype html>
+<html lang="{{ smartpage.language }}">
+<head>
+	<title>{{ smartpage.title }}</title>
+	<meta charset="utf-8">
+	{% for css in smartpage.css %}
+		<link rel="stylesheet" type="text/css" href="{{ css }}?v={{ smartpage.clientversion }}" />
+	{% endfor %}
+</head>
+<body class="{{ smartpage.bodyclass }}">
+
+{% with data %}
+	{% block content %}{% endblock %}
+{% endwith %}
+
+{% for js in smartpage.js %}
+	<script src="{{ js }}?v={{ smartpage.clientversion }}"></script>
+{% endfor %}
+
+</body>
+</html>
+{% endspaceless %}
