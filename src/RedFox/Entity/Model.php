@@ -24,6 +24,7 @@ abstract class Model {
 
 	private function __construct($entityClass) {
 		$this->entityClass = $entityClass;
+		$this->entityShortName = (new \ReflectionClass($entityClass))->getShortName();
 		$this->setup();
 	}
 
