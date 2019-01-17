@@ -46,5 +46,6 @@ class FileCache {
 	}
 
 	public function getTime($key) { return filemtime($this->file($key)); }
+	public function getAge($key) { return time() - filemtime($this->file($key)); }
 
 }
