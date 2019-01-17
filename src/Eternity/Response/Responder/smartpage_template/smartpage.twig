@@ -2,6 +2,7 @@
 <!doctype html>
 <html lang="{{ smartpage.language }}">
 <head>
+	{% block head %}
 	<title>{{ smartpage.title }}</title>
 	<meta charset="utf-8">
 	{% for css in smartpage.css %}
@@ -24,6 +25,7 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
+	{% endblock %}
 </head>
 <body class="{{ smartpage.bodyclass }}">
 
