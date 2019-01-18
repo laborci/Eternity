@@ -13,41 +13,35 @@ abstract class Segment {
 
 	private $nextSegment;
 
-	private $request;
-	private $response;
+//	private $request;
+//	private $response;
 	private $argumentsBag;
-	private $pathBag;
-	private $dataBag;
+//	private $pathBag;
+//	private $dataBag;
 	/** @var PipelineRunner */
 	private $runner;
 
-	final public function execute(
-		$method,
-		Request $request,
-		Response $response,
-		ParameterBag $argumentsBag,
-		ParameterBag $pathBag,
-		ParameterBag $dataBag,
-		PipelineRunner $runner) {
-		$this->request = $request;
-		$this->response = $response;
+	final public function execute($method,
+	                              ParameterBag $argumentsBag,
+	                              PipelineRunner $runner) {
 		$this->argumentsBag = $argumentsBag;
-		$this->pathBag = $pathBag;
-		$this->dataBag = $dataBag;
 		$this->runner = $runner;
 		is_null($method) ? $this() : $this($method);
 	}
 
-	protected function next(){ ($this->runner)(); }
-	protected function redirect($url, $status = 302) { $this->break(Redirect::class, ['url'=>$url, 'status'=>$status]); }
-	protected function break($responderClass, $arguments=[]){ ($this->runner)($responderClass, $arguments); }
+	protected function next() { ($this->runner)(); }
+	protected function redirect($url, $status = 302) { $this->break(Redirect::class, ['url' => $url, 'status' => $status]); }
+	protected function break($responderClass, $arguments = []) { ($this->runner)($responderClass, $arguments); }
 
 	abstract public function __invoke($method = null);
 
-	final protected function getRequest(): Request { return $this->request; }
-	final protected function getResponse(): Response { return $this->response; }
-	final protected function getPathBag(): ParameterBag { return $this->pathBag; }
-	final protected function getDataBag(): ParameterBag { return $this->dataBag; }
+	final protected function getRequest(): Request { return $this->runner->getRequest(); }
+
+	final protected function getResponse(): Response { return $this->runner->getResponse(); }
+	final protected function setResponse(Response $response) { return $this->runner->setResponse($response); }
+
+	final protected function getDataBag(): ParameterBag { return $this->runner->getDataBag(); }
+	final protected function getPathBag(): ParameterBag { return $this->runner->getPathBag(); }
 	final protected function getArgumentsBag(): ParameterBag { return $this->argumentsBag; }
 	final protected function getRequestBag(): ParameterBag { return $this->getRequest()->request; }
 	final protected function getQueryBag(): ParameterBag { return $this->getRequest()->query; }

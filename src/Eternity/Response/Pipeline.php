@@ -22,11 +22,12 @@ class Pipeline {
 	/** @var PipelineRunner */
 	protected $runner;
 
-	public function __construct($pipeline = [], $pathParameters = [], Request $request = null) {
+	public function __construct($pipeline = [],
+	                            $pathParameters = [],
+	                            Request $request = null) {
 		$this->request = $request;
 		$this->pathBag = new ParameterBag($pathParameters);
 		$this->dataBag = new ParameterBag();
-		$this->response = new Response();
 		$this->pipeline = [];
 		foreach ($pipeline as $segment) $this->pipe($segment['responderClass'], $segment['arguments']);
 	}
@@ -36,13 +37,11 @@ class Pipeline {
 	public function run() {
 		$runner = new PipelineRunner(
 			$this->request,
-			$this->response,
 			$this->pathBag,
 			$this->dataBag,
 			$this->pipeline
 		);
-		$runner();
-		$this->response->send();
+		$runner()->send();
 		die();
 	}
 
