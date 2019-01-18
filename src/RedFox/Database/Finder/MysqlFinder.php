@@ -27,7 +27,7 @@ class MysqlFinder extends AbstractFinder {
 		return $pdostatement->fetch($this->connection::FETCH_COLUMN);
 	}
 
-	protected function buildSQL($doCounting = false): string {
+	public function buildSQL($doCounting = false): string {
 		return
 			'SELECT ' .
 			($doCounting ? 'SQL_CALC_FOUND_ROWS ' : '') .
@@ -39,4 +39,7 @@ class MysqlFinder extends AbstractFinder {
 			($this->offset ? ' OFFSET ' . $this->offset : '');
 	}
 
+	public function fetch($fetchmode = \PDO::FETCH_ASSOC):array {
+		return $this->connection->query($this->buildSQL())->fetch($fetchmode);
+	}
 }

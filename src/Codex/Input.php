@@ -23,6 +23,15 @@ class Input {
 		];
 	}
 
+	public function __invoke($option, $value = true) {
+		return $this->option($option, $value);
+	}
+
+	public function option($option, $value = true){
+		$this->options[$option] = $value;
+		return $this;
+	}
+
 	public function __set($name, $value) {
 		if(substr($name,0, 3) === 'opt'){
 			$this->options[strtolower(substr($name, 3))] = $value;

@@ -68,6 +68,8 @@ abstract class AbstractFinder {
 		return $records;
 	}
 
+	abstract public function fetch($fetchmode = \PDO::FETCH_ASSOC):array ;
+
 	protected function pickRecord() {
 		$records = $this->collectRecords(1, null);
 		if ($records) {
@@ -87,7 +89,7 @@ abstract class AbstractFinder {
 
 	abstract public function count(): int;
 
-	abstract protected function buildSQL($doCounting = false): string;
+	abstract public function buildSQL($doCounting = false): string;
 
 	protected function convertRecord($record) {
 		$converter = $this->converter;
