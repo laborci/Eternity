@@ -12,10 +12,11 @@ class FileCache {
 		$this->path = $path . '/';
 	}
 
-	public function set($key, $value) {
+	public function set($key, $value, int $time = null) {
 		$this->cachedThisSession[] = $key;
-		file_put_contents($this->file($key), $value);
-
+		$file = $this->file($key);
+		file_put_contents($file, $value);
+		if(!is_null($time)) touch($file, time()+$time);
 	}
 
 	public function exists($key) { return file_exists($this->file($key)); }
@@ -47,5 +48,6 @@ class FileCache {
 
 	public function getTime($key) { return filemtime($this->file($key)); }
 	public function getAge($key) { return time() - filemtime($this->file($key)); }
+	public function isValid($key){ return $this->exists($key) && $this->getAge($key)<0; }
 
 }

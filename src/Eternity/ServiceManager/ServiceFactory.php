@@ -28,7 +28,7 @@ class ServiceFactory{
 		return $this;
 	}
 
-	public function service(string $service){
+	public function service($service){
 		$this->type = static::SERVICE;
 		$this->service = $service;
 		return $this;

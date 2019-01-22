@@ -1,4 +1,4 @@
-<?php namespace Codex\Authentication;
+<?php namespace Zuul;
 
 use Eternity\Session\Container;
 

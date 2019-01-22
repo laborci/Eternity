@@ -1,4 +1,4 @@
-<?php namespace Codex\Authentication;
+<?php namespace Zuul;
 
 
 class AuthService implements AuthServiceInterface {
@@ -29,8 +29,6 @@ class AuthService implements AuthServiceInterface {
 		}catch (\Throwable $exception){
 			return false;
 		}
-		dump('PASS:', $user->checkPassword($password));
-		dump('PERM:',  $user->checkPermission($permission));
 		if ($user->checkPassword($password) && ( $user->checkPermission($permission) || is_null($permission))) {
 			$this->registerLogin($user);
 			return true;

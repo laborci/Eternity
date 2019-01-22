@@ -24,7 +24,8 @@
             "Eternity\\": "src/Eternity",
             "RedFox\\": "src/RedFox",
             "GMark\\": "src/GMark",
-            "Codex\\": "src/Codex"
+            "Codex\\": "src/Codex",
+            "Zuul\\": "src/Zuul"
         }
     }
 }

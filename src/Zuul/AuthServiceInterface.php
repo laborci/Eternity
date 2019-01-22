@@ -1,5 +1,4 @@
-<?php namespace Codex\Authentication;
-
+<?php namespace Zuul;
 
 interface AuthServiceInterface {
 
