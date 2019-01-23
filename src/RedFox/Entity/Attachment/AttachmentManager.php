@@ -1,6 +1,6 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Eternity\Application\Config;
+use Application\Config;
 use RedFox\Entity\Entity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -72,9 +72,9 @@ class AttachmentManager {
 		$this->owner = $owner;
 		$this->descriptor = $descriptor;
 		$ownerId = $owner->id ? $owner->id : '0';
-		$this->path = Config::get('attachment')['attachments_path'] . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
+		$this->path = Config::attachment()::attachments_path . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
 		$this->pathId = $descriptor->getEntityShortName() . '-' . $ownerId . '-' . $descriptor->getName();
-		$this->urlBase = Config::get('attachment')['attachments_url'] . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
+		$this->urlBase = Config::attachment()::attachments_url . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
 		if (!is_dir($this->path)) {
 			mkdir($this->path, 0777, true);
 		}

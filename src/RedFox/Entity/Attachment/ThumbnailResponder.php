@@ -1,6 +1,6 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Eternity\Application\Config;
+use Application\Config;
 use Eternity\Response\Responder\PageResponder;
 
 
@@ -23,13 +23,13 @@ class ThumbnailResponder extends PageResponder {
 		if($ext == 'jpg'){ $jpegquality = array_pop($parts); }else{$jpegquality = null;}
 		$op = array_pop($parts);
 		$file = join('.', $parts);
-		$path = Config::get('attachment')['attachments_path'].preg_replace("/-/",'/',$pathId,2).'/'.$file;
+		$path = Config::attachment()::attachments_path.preg_replace("/-/",'/',$pathId,2).'/'.$file;
 
 		$url = $file . '.' . $op . (($jpegquality)?('.'.$jpegquality):('')).'.' . $pathId.'.' . $ext;
-		$newHash = base_convert(crc32($url . Config::get('attachment')['thumbnail_secret']), 10, 32);
+		$newHash = base_convert(crc32($url . Config::attachment()::thumbnail_secret), 10, 32);
 
-		if(!is_dir(Config::get('attachment')['thumbnails_path'])) mkdir(Config::get('attachment')['thumbnails_path']);
-		$this->target = Config::get('attachment')['thumbnails_path'].$uri;
+		if(!is_dir(Config::attachment()::thumbnails_path)) mkdir(Config::attachment()::thumbnails_path);
+		$this->target = Config::attachment()::thumbnails_path.$uri;
 		$this->source = $path;
 		$this->ext = $ext;
 

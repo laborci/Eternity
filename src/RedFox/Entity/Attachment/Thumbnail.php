@@ -1,6 +1,6 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Eternity\Application\Config;
+use Application\Config;
 
 /**
  * @property string $png
@@ -25,7 +25,7 @@ class Thumbnail {
 	}
 
 	public function purge(){
-		$files = glob(Config::get('attachment')['thumbnails_path'].$this->file->getFilename().'.*.'.$this->file->pathId.'.*');
+		$files = glob(Config::attachment()::thumbnails_path.$this->file->getFilename().'.*.'.$this->file->pathId.'.*');
 		foreach ($files as $file) unlink($file);
 	}
 
@@ -146,7 +146,7 @@ class Thumbnail {
 		}
 
 		$url = $this->file->getFilename() . '.' . $op . '.' . $this->file->pathId;
-		$url = Config::get('attachment')['thumbnails_url'].$url.'.' . base_convert(crc32($url . '.' . $ext . Config::get('attachment')['thumbnail_secret']), 10, 32) . '.' . $ext;
+		$url = Config::attachment()::thumbnails_url.$url.'.' . base_convert(crc32($url . '.' . $ext . Config::attachment()::thumbnail_secret), 10, 32) . '.' . $ext;
 
 		return $url;
 	}

@@ -25,11 +25,14 @@ class PipelineRunner {
 	}
 
 	public function __invoke($responderClass = null, $arguments = []) {
+		$segment = null;
 		if (!is_null($responderClass)) {
 			$segment = ['responderClass' => $responderClass, 'arguments' => $arguments];
 			$this->pipeline = [];
 		} else if (count($this->pipeline)) {
 			$segment = array_shift($this->pipeline);
+		}
+		if($segment) {
 			$class = is_array($segment['responderClass']) ? $segment['responderClass'][0] : $segment['responderClass'];
 			$method = is_array($segment['responderClass']) ? $segment['responderClass'][1] : null;
 			$arguments = $segment['arguments'];

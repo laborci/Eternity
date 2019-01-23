@@ -30,7 +30,7 @@ abstract class Segment {
 	}
 
 	protected function next() { ($this->runner)(); }
-	protected function redirect($url, $status = 302) { $this->break(Redirect::class, ['url' => $url, 'status' => $status]); }
+	protected function redirect($url="/", $status = 302) { $this->break(Redirect::class, ['url' => $url, 'status' => $status]); }
 	protected function break($responderClass, $arguments = []) { ($this->runner)($responderClass, $arguments); }
 
 	abstract public function __invoke($method = null);

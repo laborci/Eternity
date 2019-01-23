@@ -1,7 +1,7 @@
 <?php namespace RedFox\Cli;
 
 use CaseHelper\CaseHelperFactory;
-use Eternity\Application\Config;
+use Application\Config;
 use Eternity\ServiceManager\ServiceContainer;
 use Minime\Annotations\Reader;
 use RedFox\Database\PDOConnection\AbstractPDOConnection;
@@ -70,8 +70,8 @@ class CreateEntity extends Command {
 			$table = $input->getArgument('table');
 			$table = is_null($table) ? CaseHelperFactory::make(CaseHelperFactory::INPUT_TYPE_CAMEL_CASE)->toSnakeCase($name) : $table;
 			$databaseId = $input->getArgument('database');
-			$databaseId = is_null($databaseId) ? Config::get('entity_generator')['default_database'] : $databaseId;
-			$database = Config::get('entity_generator')['databases'][$databaseId];
+			$databaseId = is_null($databaseId) ? Config::entity_generator()::default_database : $databaseId;
+			$database = Config::entity_generator()::databases[$databaseId];
 		}
 
 

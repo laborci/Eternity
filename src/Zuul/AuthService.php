@@ -19,10 +19,6 @@ class AuthService implements AuthServiceInterface {
 		return $this->container->getUserId();
 	}
 
-	public function getAuthenticated(): AuthenticableInterface {
-		return $this->repository->authLookup($this->container->getUserId());
-	}
-
 	public function login($login, $password, $permission = null): bool {
 		try {
 			$user = $this->repository->authLoginLookup($login);
@@ -43,7 +39,7 @@ class AuthService implements AuthServiceInterface {
 
 	public function checkPermission($permission): bool {
 		if(!$this->isAuthenticated()) return false;
-		return $this->getAuthenticated()->checkPermission($permission);
+		return  $this->repository->authLookup($this->container->getUserId())->checkPermission($permission);
 	}
 
 	public function logout() {

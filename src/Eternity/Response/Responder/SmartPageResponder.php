@@ -1,6 +1,6 @@
 <?php namespace Eternity\Response\Responder;
 
-use Eternity\Application\Config;
+use Application\Config;
 use Eternity\ServiceManager\ServiceContainer;
 use Minime\Annotations\Reader;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +33,7 @@ abstract class SmartPageResponder extends TwigPageResponder {
 
 	private function getViewModelSmartPageComponents(){
 		return [
-			'clientversion' => Config::get('smartresponder-clientversion'),
+			'clientversion' => Config::env()::smartresponder_clientversion(),
 			'title'         => $this->title ? $this->title : $this->annotations->get('title'),
 			'language'      => $this->language ? $this->language : $this->annotations->get('language', getenv('LANGUAGE')),
 			'bodyclass'     => $this->bodyclass ? $this->bodyclass : $this->annotations->get('bodyclass'),
@@ -41,7 +41,7 @@ abstract class SmartPageResponder extends TwigPageResponder {
 			'js'            => $this->annotations->getAsArray('js'),
 		];
 	}
-	
+
 }
 
 
