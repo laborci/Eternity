@@ -1,16 +1,17 @@
 <?php namespace Eternity\Factory;
 
-use Application\Config;
+use Eternity\ServiceManager\Service;
 use Minime\Annotations\Cache\FileCache;
 use Minime\Annotations\Parser;
 use Minime\Annotations\Reader;
 
 class AnnotationReaderFactory {
 
-	static public function factory():Reader{
+	protected $config;
+	public function __construct(AnnotationReaderConfigInterface $config) { $this->config = $config; }
 
-		$reader = new Reader(new Parser(), new FileCache(Config::annotationreader()::cache));
-
+	public function factory(): Reader {
+		$reader = new Reader(new Parser(), new FileCache($this->config::cache()));
 		return $reader;
 	}
 }

@@ -1,6 +1,6 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Application\Config;
+use Eternity\ServiceManager\ServiceContainer;
 use RedFox\Entity\Entity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -16,6 +16,9 @@ class AttachmentManager {
 
 	/** @var  \RedFox\Entity\Attachment\Attachment[] */
 	protected $attachments = null;
+
+	/** @var AttachmentConfigInterface */
+	protected $config;
 
 	protected $path;
 	protected $pathId;
@@ -69,12 +72,13 @@ class AttachmentManager {
 
 
 	public function __construct(Entity $owner, AttachmentDescriptor $descriptor) {
+		$this->config = ServiceContainer::get(AttachmentConfigInterface::class);
 		$this->owner = $owner;
 		$this->descriptor = $descriptor;
 		$ownerId = $owner->id ? $owner->id : '0';
-		$this->path = Config::attachment()::attachments_path . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
+		$this->path = $this->config::attachments_path() . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
 		$this->pathId = $descriptor->getEntityShortName() . '-' . $ownerId . '-' . $descriptor->getName();
-		$this->urlBase = Config::attachment()::attachments_url . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
+		$this->urlBase = $this->config::attachments_url() . $descriptor->getEntityShortName() . '/' . $ownerId . '/' . $descriptor->getName() . '/';
 		if (!is_dir($this->path)) {
 			mkdir($this->path, 0777, true);
 		}

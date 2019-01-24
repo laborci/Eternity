@@ -1,8 +1,7 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Application\Config;
 use Eternity\Response\Responder\PageResponder;
-
+use Eternity\ServiceManager\ServiceContainer;
 
 class ThumbnailResponder extends PageResponder {
 
@@ -12,6 +11,12 @@ class ThumbnailResponder extends PageResponder {
 	protected $originalHeight;
 	protected $originalWidth;
 	protected $ext;
+	/** @var AttachmentConfigInterface */
+	protected $config;
+
+	public function __construct() {
+		$this->config = ServiceContainer::get(AttachmentConfigInterface::class);
+	}
 
 	protected function prepare(): bool {
 		$uri = explode('/', $this->getRequest()->getRequestUri());
@@ -23,13 +28,13 @@ class ThumbnailResponder extends PageResponder {
 		if($ext == 'jpg'){ $jpegquality = array_pop($parts); }else{$jpegquality = null;}
 		$op = array_pop($parts);
 		$file = join('.', $parts);
-		$path = Config::attachment()::attachments_path.preg_replace("/-/",'/',$pathId,2).'/'.$file;
+		$path = $this->config::attachments_path().preg_replace("/-/",'/',$pathId,2).'/'.$file;
 
 		$url = $file . '.' . $op . (($jpegquality)?('.'.$jpegquality):('')).'.' . $pathId.'.' . $ext;
-		$newHash = base_convert(crc32($url . Config::attachment()::thumbnail_secret), 10, 32);
+		$newHash = base_convert(crc32($url . $this->config::thumbnail_secret()), 10, 32);
 
-		if(!is_dir(Config::attachment()::thumbnails_path)) mkdir(Config::attachment()::thumbnails_path);
-		$this->target = Config::attachment()::thumbnails_path.$uri;
+		if(!is_dir($this->config::thumbnails_path())) mkdir($this->config::thumbnails_path());
+		$this->target = $this->config::thumbnails_path().$uri;
 		$this->source = $path;
 		$this->ext = $ext;
 

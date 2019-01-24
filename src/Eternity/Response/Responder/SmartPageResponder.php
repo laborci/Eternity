@@ -11,6 +11,9 @@ abstract class SmartPageResponder extends TwigPageResponder {
 	protected $bodyclass;
 	protected $language;
 
+	/** @var SmartPageResponderConfigInterface */
+	private $config;
+
 	public function __construct() {
 		parent::__construct();
 		/** @var \Twig_Environment $twig */
@@ -18,6 +21,7 @@ abstract class SmartPageResponder extends TwigPageResponder {
 		/** @var \Twig_Loader_Filesystem $loader */
 		$loader =$twig->getLoader();
 		$loader->addPath(__DIR__.'/smartpage_template', 'smartpage');
+		$this->config = ServiceContainer::get(SmartPageResponderConfigInterface::class);
 	}
 
 	protected function getViewModelData(){
@@ -33,7 +37,7 @@ abstract class SmartPageResponder extends TwigPageResponder {
 
 	private function getViewModelSmartPageComponents(){
 		return [
-			'clientversion' => Config::env()::smartresponder_clientversion(),
+			'clientversion' => $this->config::client_version(),
 			'title'         => $this->title ? $this->title : $this->annotations->get('title'),
 			'language'      => $this->language ? $this->language : $this->annotations->get('language', getenv('LANGUAGE')),
 			'bodyclass'     => $this->bodyclass ? $this->bodyclass : $this->annotations->get('bodyclass'),

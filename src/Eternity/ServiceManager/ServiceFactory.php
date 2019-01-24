@@ -12,6 +12,8 @@ class ServiceFactory{
 
 	const SERVICE = 1;
 	const FACTORY = 2;
+	const FACTORY_STATIC = 3;
+	const FACTORY_SERVICE = 4;
 
 	public function __construct(string $name) {
 		$this->name = $name;
@@ -28,6 +30,18 @@ class ServiceFactory{
 		return $this;
 	}
 
+	public function factoryStatic(array $factory){
+		$this->type = static::FACTORY_STATIC;
+		$this->factory = $factory;
+		return $this;
+	}
+
+	public function factoryService(array $factory){
+		$this->type = static::FACTORY_SERVICE;
+		$this->factory = $factory;
+		return $this;
+	}
+
 	public function service($service){
 		$this->type = static::SERVICE;
 		$this->service = $service;
@@ -37,8 +51,11 @@ class ServiceFactory{
 	public function get(){
 		if(!is_null($this->sharedService)){
 			return $this->sharedService;
-		}elseif ($this->type === static::FACTORY){
+		}elseif ($this->type === static::FACTORY || $this->type === static::FACTORY_STATIC){
 			$service = ($this->factory)($this->name);
+		}elseif ($this->type === static::FACTORY_SERVICE){
+			$method = $this->factory[1];
+			$service = ServiceContainer::get($this->factory[0])->$method($this->name);
 		}else{
 			$class = $this->service;
 			$reflect = new \ReflectionClass($class);

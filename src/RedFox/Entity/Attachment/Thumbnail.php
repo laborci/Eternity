@@ -1,6 +1,6 @@
 <?php namespace RedFox\Entity\Attachment;
 
-use Application\Config;
+use Eternity\ServiceManager\ServiceContainer;
 
 /**
  * @property string $png
@@ -16,16 +16,20 @@ class Thumbnail {
 	protected $operation;
 	protected $jpegQuality;
 
+	/** @var AttachmentConfigInterface */
+	protected $config;
+
 	const CROP_MIDDLE = 0;
 	const CROP_START = -1;
 	const CROP_END = 1;
 
 	public function __construct(Attachment $file) {
+		$this->config = ServiceContainer::get(AttachmentConfigInterface::class);
 		$this->file = $file;
 	}
 
 	public function purge(){
-		$files = glob(Config::attachment()::thumbnails_path.$this->file->getFilename().'.*.'.$this->file->pathId.'.*');
+		$files = glob($this->config::thumbnails_path().$this->file->getFilename().'.*.'.$this->file->pathId.'.*');
 		foreach ($files as $file) unlink($file);
 	}
 
@@ -146,7 +150,7 @@ class Thumbnail {
 		}
 
 		$url = $this->file->getFilename() . '.' . $op . '.' . $this->file->pathId;
-		$url = Config::attachment()::thumbnails_url.$url.'.' . base_convert(crc32($url . '.' . $ext . Config::attachment()::thumbnail_secret), 10, 32) . '.' . $ext;
+		$url = $this->config::thumbnails_url().$url.'.' . base_convert(crc32($url . '.' . $ext . $this->config::thumbnail_secret()), 10, 32) . '.' . $ext;
 
 		return $url;
 	}

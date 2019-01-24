@@ -1,6 +1,8 @@
 <?php namespace RedFox\Entity\Attachment;
 
 
+use Eternity\ServiceManager\ServiceContainer;
+
 /**
  * Class Attachment
  * @package RedFox\Entity\Attachment
@@ -11,6 +13,7 @@
  */
 class Attachment extends \Symfony\Component\HttpFoundation\File\File {
 
+	/** @var AttachmentManager  */
 	protected $manager;
 	protected $meta = null;
 
