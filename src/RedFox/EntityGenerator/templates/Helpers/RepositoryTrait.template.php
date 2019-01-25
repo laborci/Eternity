@@ -3,7 +3,7 @@
 /**
  * @method \Entity\{{name}}\{{name}} pick(int $id, bool $strict = true)
  * @method \Entity\{{name}}\{{name}}[] collect(array $id_list, bool $strict = true)
- * @method \Entity\{{name}}\Finder search(\RedFox\Database\Filter\Filter $filter = null)
+ * @method \Entity\{{name}}\Helpers\Finder search(\RedFox\Database\Filter\Filter $filter = null)
  */
 
 trait RepositoryTrait {

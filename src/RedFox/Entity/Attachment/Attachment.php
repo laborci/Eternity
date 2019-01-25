@@ -54,7 +54,7 @@ class Attachment extends \Symfony\Component\HttpFoundation\File\File {
 
 	protected function deleteMetaFile(){
 		$metafile = $this->getMetaFilepath();
-		unlink($metafile);
+		if(file_exists($metafile))unlink($metafile);
 	}
 
 	protected function loadMeta(){
@@ -69,7 +69,7 @@ class Attachment extends \Symfony\Component\HttpFoundation\File\File {
 	protected function saveMeta(){
 		$metafile = $this->getMetaFilepath();
 		if(count($this->meta)) file_put_contents($metafile, json_encode($this->meta));
-		else unlink($metafile);
+		elseif(file_exists($metafile)) unlink($metafile);
 	}
 
 	protected function getMetaFilepath(){

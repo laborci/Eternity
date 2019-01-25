@@ -1,6 +1,7 @@
 <?php namespace Eternity\Factory;
 
 
+use Application\Config;
 use Eternity\ServiceManager\Service;
 
 class TwigFactory {

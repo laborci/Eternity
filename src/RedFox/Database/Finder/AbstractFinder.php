@@ -21,37 +21,52 @@ abstract class AbstractFinder {
 		$this->connection = $connection;
 	}
 
-	public function setConverter(callable $converter = null): self {
+	/** @return $this */
+	public function setConverter(callable $converter = null) {
 		$this->converter = $converter;
 		return $this;
 	}
 
-	public function select(string $sql, ...$sqlParams): self {
+	/** @return $this */
+	public function select(string $sql, ...$sqlParams) {
 		$this->select = $this->connection->applySQLParameters($sql, $sqlParams);
 		return $this;
 	}
 
-	public function from(string $sql, ...$sqlParams): self {
+	/** @return $this */
+	public function from(string $sql, ...$sqlParams) {
 		$this->from = $this->connection->applySQLParameters($sql, $sqlParams);
 		return $this;
 	}
 
-	public function where(Filter $filter = null): self {
+	/** @return $this */
+	public function where(Filter $filter = null) {
 		$this->filter = $filter;
 		return $this;
 	}
 
 	#region ORDER
-	function order($order): self {
+	/** @return $this */
+	public function order($order) {
 		if (is_array($order)) foreach ($order as $field => $dir) $this->order[] = $this->connection->escapeSQLEntity($field) . ' ' . $dir;
 		else $this->order[] = $order;
 		return $this;
 	}
-	function asc($field): self { return $this->order($this->connection->escapeSQLEntity($field) . ' ASC'); }
-	function desc($field): self { return $this->order($this->connection->escapeSQLEntity($field) . ' DESC'); }
-	function ascIf(bool $cond, string $field): self { return $cond ? $this->asc($field) : $this; }
-	function descIf(bool $cond, string $field): self { return $cond ? $this->desc($field) : $this; }
-	function orderIf(bool $cond, $order): self { return $cond ? $this->order($order) : $this; }
+
+	/** @return $this */
+	public function asc($field) { return $this->order($this->connection->escapeSQLEntity($field) . ' ASC'); }
+
+	/** @return $this */
+	public function desc($field) { return $this->order($this->connection->escapeSQLEntity($field) . ' DESC'); }
+
+	/** @return $this */
+	public function ascIf(bool $cond, string $field) { return $cond ? $this->asc($field) : $this; }
+
+	/** @return $this */
+	public function descIf(bool $cond, string $field) { return $cond ? $this->desc($field) : $this; }
+
+	/** @return $this */
+	public function orderIf(bool $cond, $order) { return $cond ? $this->order($order) : $this; }
 	#endregion
 
 	public function collect($limit = null, $offset = null, &$count = null): array {

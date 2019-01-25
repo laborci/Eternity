@@ -77,9 +77,9 @@ class Creator {
 		$this->translateFile($entityDirectory . '/' . $name . 'Repository.php', $templateDirectory . '/repository.template.php', $dictionary);
 		$this->translateFile($entityDirectory . '/' . $name . 'Model.php', $templateDirectory . '/model.template.php', $dictionary);
 		$this->translateFile($entityHelperDirectory . '/source.php', $templateHelperDirectory . '/source.template.php', $dictionary);
-		$this->translateFile($entityHelperDirectory . '/RepositoryTrait.php', $templateHelperDirectory . '/RepositoryTrait.template.php', $dictionary);
+		$this->translateFile($entityHelperDirectory . '/RepositoryTrait.php', $templateHelperDirectory . '/RepositoryTrait.template.php', $dictionary, true);
 		$this->translateFile($entityHelperDirectory . '/EntityTrait.php', $templateHelperDirectory . '/EntityTrait.template.php', $dictionary);
-		$this->translateFile($entityHelperDirectory . '/Finder.php', $templateHelperDirectory . '/Finder.template.php', $dictionary);
+		$this->translateFile($entityHelperDirectory . '/Finder.php', $templateHelperDirectory . '/Finder.template.php', $dictionary, true);
 		$this->translateFile($entityHelperDirectory . '/fields.php', $templateHelperDirectory . '/fields.template.php', $dictionary);
 
 		$this->updateFields($database, $table, $entityHelperDirectory . '/fields.php');

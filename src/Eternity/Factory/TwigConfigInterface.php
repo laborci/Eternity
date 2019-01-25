@@ -1,8 +1,4 @@
-<?php
-
-
-namespace Eternity\Factory;
-
+<?php namespace Eternity\Factory;
 
 interface TwigConfigInterface {
 	static public function cache();
