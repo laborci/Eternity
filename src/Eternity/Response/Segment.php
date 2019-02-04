@@ -11,13 +11,8 @@ use Symfony\Component\HttpFoundation\ServerBag;
 
 abstract class Segment {
 
-	private $nextSegment;
-
-//	private $request;
-//	private $response;
+	/** @var ParameterBag */
 	private $argumentsBag;
-//	private $pathBag;
-//	private $dataBag;
 	/** @var PipelineRunner */
 	private $runner;
 
@@ -25,7 +20,7 @@ abstract class Segment {
 	                              ParameterBag $argumentsBag,
 	                              PipelineRunner $runner) {
 		$this->argumentsBag = $argumentsBag;
-		$this->runner = $runner;
+		$this->runner = $runner;  
 		is_null($method) ? $this() : $this($method);
 	}
 

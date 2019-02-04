@@ -3,11 +3,18 @@
 use Eternity\Response\Segment;
 
 class Redirect extends Segment {
+
+	protected $url;
+	protected $status;
+
 	final public function __invoke($method = null) {
-		$url = $this->getArgumentsBag()->get('url', '/');
-		$status = $this->getArgumentsBag()->get('status', 302);
+		$this->url = $this->getArgumentsBag()->get('url', '/');
+		$this->status = $this->getArgumentsBag()->get('status', 302);
+
+		if(!is_null($method)){ $this->$method(); }
+
 		$response = $this->getResponse();
-		$response->headers->set('Location', $url);
-		$response->setStatusCode($status);
+		$response->headers->set('Location', $this->url);
+		$response->setStatusCode($this->status);
 	}
 }
