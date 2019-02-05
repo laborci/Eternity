@@ -220,7 +220,7 @@ class Creator {
 			$label = (array_key_exists($db_field['Field'], $modifiers) ? $modifiers[$db_field['Field']] : '') . $db_field['Field'];
 
 			if (strpos($label, '!') !== false) {
-				$output .= "\t'$label' => [" . '\\' . $fields[$db_field['Field']][0] . '::class' . ($fields[$db_field['Field']][1] ? ', ' . $encoder->encode($fields[$db_field['Field']][1], ['array.inline' => true]) : '') . "],\n";
+				$output .= "\t'$label' => [" . '\\' . $fields[$db_field['Field']][0] . '::class' . (array_key_exists(1,$fields[$db_field['Field']]) ? ', ' . $encoder->encode($fields[$db_field['Field']][1], ['array.inline' => true]) : '') . "],\n";
 			} else {
 				$type = $this->selectRedfoxField($db_field, $db_field['Field']) . '::class';
 				$output .= "\t'$label' => [$type";

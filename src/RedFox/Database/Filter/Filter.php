@@ -35,12 +35,14 @@ class Filter {
 		return $condition ? $filter->addWhere('WHERE', $sql, $sqlParams) : $filter;
 	}
 
-	public function and(string $sql, ...$sqlParams): self { return $this->addWhere('AND', $sql, $sqlParams); }
-	public function or(string $sql, ...$sqlParams): self { return $this->addWhere('OR', $sql, $sqlParams); }
-	public function andIf(bool $condition, string $sql, ...$sqlParams): self { return $condition ? $this->addWhere('AND', $sql, $sqlParams) : $this; }
-	public function orIf(bool $condition, string $sql, ...$sqlParams): self { return $condition ? $this->addWhere('OR', $sql, $sqlParams) : $this; }
+	public function and($sql, ...$sqlParams): self { return $this->addWhere('AND', $sql, $sqlParams); }
+	public function or($sql, ...$sqlParams): self { return $this->addWhere('OR', $sql, $sqlParams); }
+	public function andIf(bool $condition, $sql, ...$sqlParams): self { return $condition ? $this->addWhere('AND', $sql, $sqlParams) : $this; }
+	public function orIf(bool $condition, $sql, ...$sqlParams): self { return $condition ? $this->addWhere('OR', $sql, $sqlParams) : $this; }
+	public function andNot($sql, ...$sqlParams): self { return $this->addWhere('AND NOT', $sql, $sqlParams); }
+	public function orNot($sql, ...$sqlParams): self { return $this->addWhere('OR NOT', $sql, $sqlParams); }
 
-	protected function addWhere(string $type, string $sql, $sqlParams): self {
+	protected function addWhere(string $type, $sql, $sqlParams): self {
 		if (!$this->where) {
 			$type = 'WHERE';
 		} else if ($type == 'WHERE') {

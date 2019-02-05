@@ -48,8 +48,6 @@ class FormResponder extends JsonResponder {
 			$result = $formDataManager->save($id, $data);
 		} catch (\Throwable $exception) {
 			$this->getResponse()->setStatusCode(422);
-			dump($exception->getMessage());
-			dump($exception->getTrace());
 			$this->response->addMessage('Hiba történt a mentés közben. Ellenőrizd az adatokat!');
 			return;
 		}

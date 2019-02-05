@@ -88,8 +88,6 @@ class FormDataManager {
 	}
 
 	public function save($id, $data) {
-		dump($data);
-
 		$result = [
 			'validationResult' => $this->validate($data),
 			'id' => false,

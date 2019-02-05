@@ -5,13 +5,18 @@
  */
 class DateField extends \RedFox\Entity\Field {
 
-	public function importFromDTO($value) { return (is_null($value)) ? null : \DateTime::createFromFormat('Y-m-d H:i:s', $value); }
+	public function importFromDTO($value) {
+		$date = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+		if(!$date) $date = \DateTime::createFromFormat('Y-m-d', $value);
+		if(!$date) $date = null;
+		return $date;
+	}
 
 	/**
 	 * @param \DateTime $value
 	 * @return string
 	 */
-	public function exportToDTO($value) { return is_null($value) ? null : $value->format('Y-m-d 00:00:00'); }
+	public function exportToDTO($value) { return is_null($value) ? null : $value->format('Y-m-d'); }
 
 	public function set($value) {
 		if (is_string($value)) $value = $this->importFromDTO($value);

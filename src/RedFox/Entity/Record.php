@@ -24,8 +24,6 @@ class Record {
 	}
 
 	public function setDTO($dto){
-		//dump('SETDTO');
-		//if(array_key_exists('id', $dto)) unset($dto['id']);
 		foreach ($this->fields as $field){
 			if(array_key_exists($field, $dto)) $this->dto[$field] = $dto[$field];
 		}
@@ -48,6 +46,7 @@ class Record {
 	}
 
 	protected function importFromDTO(){
+
 		foreach ($this->fields as $field){
 			$this->data[$field] = $this->model->$field->importFromDTO($this->dto[$field]);
 		}
