@@ -42,7 +42,7 @@ class FormDataManager {
 		$item = $this->pick($id);
 		$data = $this->extract($item);
 		return [
-			'id' => $data['id'],
+			'id' => $id,
 			'record' => $data,
 		];
 	}
@@ -88,6 +88,7 @@ class FormDataManager {
 	}
 
 	public function save($id, $data) {
+
 		$result = [
 			'validationResult' => $this->validate($data),
 			'id' => false,

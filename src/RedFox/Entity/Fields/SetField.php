@@ -21,4 +21,8 @@ class SetField extends \RedFox\Entity\Field {
 		return $value;
 	}
 
+	public function importFromDTO($value) {
+		return is_null($value) ? [] : parent::importFromDTO($value);
+	}
+
 }

@@ -2,7 +2,7 @@
 
 class Record {
 
-	protected $dto;
+	protected $dto = [];
 	protected $data = [];
 	protected $model;
 	protected $fields;
@@ -10,10 +10,8 @@ class Record {
 	public function __construct(Model $model, $dto = null) {
 		$this->model = $model;
 		$this->fields = $this->model->getFields();
-		if(!is_null($dto)) {
-			foreach ($this->fields as $field) {
-				if (array_key_exists($field, $dto)) $this->dto[$field] = $dto[$field]; else $this->dto = null;
-			}
+		foreach ($this->fields as $field) {
+			$this->dto[$field] = is_array($dto) && array_key_exists($field,$dto) ? $dto[$field] : null;
 		}
 		$this->importFromDTO();
 	}
@@ -46,7 +44,6 @@ class Record {
 	}
 
 	protected function importFromDTO(){
-
 		foreach ($this->fields as $field){
 			$this->data[$field] = $this->model->$field->importFromDTO($this->dto[$field]);
 		}
