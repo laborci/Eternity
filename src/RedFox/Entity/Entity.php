@@ -130,4 +130,6 @@ abstract class Entity implements \JsonSerializable {
 	function __toString() { return $this->id; }
 	function jsonSerialize() { return $this->getDTO(); }
 
+	public function attachmentAdded(AttachmentManager $attachmentManager, $filename){}
+	
 }

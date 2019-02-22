@@ -17,8 +17,8 @@ abstract class Container implements SharedService {
 	}
 
 	private function load(){
-		foreach($this->fields as $field){
-			$this->$field = $_SESSION[$this->namespace][$field];
+		foreach($this->fields as $field) {
+			$this->$field = array_key_exists($field, $_SESSION[$this->namespace]) ? $_SESSION[$this->namespace][$field] : null;
 		}
 	}
 

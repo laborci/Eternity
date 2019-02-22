@@ -72,11 +72,11 @@ abstract class AbstractSmartAccess {
 			}
 			$data[$key] = $this->escapeSQLEntity($key) . '=' . $value;
 		}
-		return $this->execute("UPDATE " . $this->escapeSQLEntity($table) . " SET " . implode(", ", $data) . ' WHERE ' . $filter->GetSql($this))->rowCount();
+		return $this->execute("UPDATE " . $this->escapeSQLEntity($table) . " SET " . implode(", ", $data) . ' WHERE ' . $filter->GetSql($this->connection))->rowCount();
 	}
 	public function updateById(string $table, int $id, array $data): int { return $this->update($table, Filter::where('id=$1', $id), $data); }
 
-	public function delete(string $table, Filter $filter): int { return $this->execute("DELETE FROM " . $this->escapeSQLEntity($table) . " WHERE " . $filter->GetSql($this))->rowCount(); }
+	public function delete(string $table, Filter $filter): int { return $this->execute("DELETE FROM " . $this->escapeSQLEntity($table) . " WHERE " . $filter->GetSql($this->connection))->rowCount(); }
 	public function deleteById(string $table, int $id): int { return $this->delete($table, Filter::where('id=$1', $id)); }
 	#endregion
 

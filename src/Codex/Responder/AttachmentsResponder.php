@@ -112,6 +112,7 @@ class AttachmentsResponder extends JsonResponder {
 		}
 		return $result;
 	}
+	
 	protected function move($id, $group, $file, $target) {
 		return $this->copy($id, $group, $file, $target, true);
 	}

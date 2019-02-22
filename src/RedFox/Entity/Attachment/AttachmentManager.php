@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @package RedFox\Entity\Attachment
  * @property-read \RedFox\Entity\Attachment\Attachment[] $files
  * @property-read \RedFox\Entity\Attachment\Attachment $first
+ * @property-read string $name
  */
 class AttachmentManager {
 
@@ -26,21 +27,11 @@ class AttachmentManager {
 	protected $owner;
 	protected $descriptor;
 
-	public function getPath(): string {
-		return $this->path;
-	}
-
-	public function getPathId(): string {
-		return $this->pathId;
-	}
-
-	public function getUrlBase(): string {
-		return $this->urlBase;
-	}
-
-	public function getOwner(): string {
-		return $this->owner;
-	}
+	public function getPath(): string { return $this->path; }
+	public function getDescriptor(): string { return $this->descriptor; }
+	public function getPathId(): string { return $this->pathId; }
+	public function getUrlBase(): string { return $this->urlBase; }
+	public function getOwner(): string { return $this->owner; }
 
 	/**
 	 * @return \RedFox\Entity\Attachment\Attachment[]
@@ -96,6 +87,7 @@ class AttachmentManager {
 				$this->first->delete();
 			}
 			$file->move($this->path, $file->getClientOriginalName());
+			$this->owner->attachmentAdded($this, $file->getClientOriginalName());
 			$this->attachments = null;
 			return true;
 		}
@@ -113,6 +105,7 @@ class AttachmentManager {
 				$this->first->delete();
 			}
 			copy($file->getPath() . '/' . $file->getFilename(), $this->path . $file->getFilename());
+			$this->owner->attachmentAdded($this, $file->getFilename());
 			$this->attachments = null;
 			return true;
 		}
@@ -147,6 +140,9 @@ class AttachmentManager {
 	public function __get($name) {
 		$attachments = $this->getAttachments();
 		switch ($name) {
+			case 'name':
+				return $this->descriptor->getName();
+				break;
 			case 'files':
 				return $attachments;
 				break;
