@@ -11,6 +11,7 @@ class ServiceContainer {
 	protected function __construct() { }
 
 	public static function bind($name): ServiceFactory { return static::instance()->bindService($name); }
+	public static function shared($name): ServiceFactory { return static::instance()->bindService($name)->shared(); }
 	public static function get($name) { return static::instance()->getService($name); }
 
 	protected function bindService(string $serviceName) {

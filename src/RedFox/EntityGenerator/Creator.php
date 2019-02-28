@@ -1,5 +1,6 @@
 <?php namespace RedFox\EntityGenerator;
 
+use Application\Config;
 use CaseHelper\CaseHelperFactory;
 use Eternity\ServiceManager\ServiceContainer;
 use Minime\Annotations\Reader;
@@ -32,7 +33,7 @@ class Creator {
 		$this->output->writeln('::: '.$name.' :::');
 
 		$root = getenv('ROOT');
-		$entityDirectory = $root . '/Entity/' . $name;
+		$entityDirectory = $root . '/'. Config::entity_generator()::path() . $name;
 		$entityHelperDirectory = $entityDirectory . '/Helpers';
 		$templateDirectory = __DIR__ . '/templates';
 		$templateHelperDirectory = $templateDirectory . '/Helpers';
