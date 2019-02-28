@@ -14,8 +14,9 @@ class DomainRouter implements SharedService {
 
 	protected $host;
 
-	public function __construct(Request $request) {
+	public function __construct(Request $request, Logger $logger) {
 		$this->host = $request->getHost();
+		if (getenv('DEV_MODE')) $logger->request($request);
 	}
 
 	public function launch($handlerClass, $pattern) {
