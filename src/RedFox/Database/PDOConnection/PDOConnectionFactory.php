@@ -4,7 +4,7 @@ use PDO;
 
 class PDOConnectionFactory {
 
-	static function factory($url): AbstractPDOConnection {
+	static function factory($url, $sqlHook=null): AbstractPDOConnection {
 		$url = parse_url($url);
 		switch ($url['scheme']) {
 			case 'mysql':
@@ -13,6 +13,7 @@ class PDOConnectionFactory {
 			default:
 				$connection = null;
 		}
+		if(!is_null($sqlHook)) $connection->setSqlHook($sqlHook);
 		return $connection;
 	}
 

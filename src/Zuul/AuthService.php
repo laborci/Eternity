@@ -21,12 +21,7 @@ class AuthService implements AuthServiceInterface {
 
 	public function login($login, $password, $permission = null): bool {
 		$user = $this->repository->authLoginLookup($login);
-		dump($user->checkPermission($permission));
-
 		if(!$user) return false;
-
-
-
 		if ($user->checkPassword($password) && ( $user->checkPermission($permission) || is_null($permission))) {
 			$this->registerLogin($user);
 			return true;

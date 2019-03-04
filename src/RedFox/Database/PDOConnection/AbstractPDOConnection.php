@@ -1,5 +1,6 @@
 <?php namespace RedFox\Database\PDOConnection;
 
+use Application\Service\RemoteLog;
 use PDO;
 use RedFox\Database\Repository\AbstractRepository;
 use RedFox\Database\SmartAccess\AbstractSmartAccess;
@@ -16,9 +17,14 @@ abstract class AbstractPDOConnection extends \PDO {
 	abstract public function createSmartAccess():AbstractSmartAccess;
 	abstract public function createRepository(string $table):AbstractRepository;
 	abstract public function createFilterBuilder():AbstractFilterBuilder;
+
+	protected $sqlHook;
+	public function setSqlHook(callable $hook){$this->sqlHook = $hook;}
+
 	public function query($sql) {
-		$statement = parent::query($sql);
-		dump($statement);
-		return $statement;
+		if(!is_null($this->sqlHook)){
+			($this->sqlHook)($sql);
+		}
+		return parent::query($sql);
 	}
 }
