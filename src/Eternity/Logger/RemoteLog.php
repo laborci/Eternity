@@ -4,7 +4,7 @@ use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\SharedService;
 use Symfony\Component\HttpFoundation\Request;
 
-class RemoteLog implements SharedService {
+class RemoteLog implements LoggerInterface, SharedService {
 
 	use Service;
 
@@ -54,7 +54,6 @@ class RemoteLog implements SharedService {
 	public function __invoke($data) { $this->log('info', $data); }
 	public function dump($data) { $this->log('info', $data); }
 	public function sql($sql) { $this->log('sql', $sql); }
-	public function info(...$messages) { $this->log('info', $messages); }
 
 	protected function log($type, $message) {
 		$this->post_without_wait($this->host . ':' . $this->port, [
@@ -69,7 +68,7 @@ class RemoteLog implements SharedService {
 		]);
 	}
 
-	function post_without_wait($url, $message) {
+	protected function post_without_wait($url, $message) {
 		$post_string = json_encode($message);
 		$parts = parse_url($url);
 		try {

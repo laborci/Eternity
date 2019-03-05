@@ -2,7 +2,6 @@
 
 use Eternity\Application\Config;
 use Eternity\Application\WebApp;
-use Eternity\Logger\Logger;
 use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\ServiceContainer;
 use Eternity\ServiceManager\SharedService;
@@ -14,9 +13,8 @@ class DomainRouter implements SharedService {
 
 	protected $host;
 
-	public function __construct(Request $request, Logger $logger) {
+	public function __construct(Request $request) {
 		$this->host = $request->getHost();
-		if (getenv('DEV_MODE')) $logger->request($request);
 	}
 
 	public function launch($handlerClass, $pattern) {
