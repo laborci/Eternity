@@ -8,7 +8,6 @@ abstract class Menu extends JsonResponder {
 
 	protected function respond() {
 		$this->createMenu();
-		dump($this->menu);
 		return $this->menu;
 	}
 

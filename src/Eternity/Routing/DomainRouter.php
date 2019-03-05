@@ -1,6 +1,5 @@
 <?php namespace Eternity\Routing;
 
-use Eternity\Application\Config;
 use Eternity\Application\WebApp;
 use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\ServiceContainer;
@@ -11,17 +10,29 @@ class DomainRouter implements SharedService {
 
 	use Service;
 
-	protected $host;
+	protected $request;
+	protected $superDomain = '';
 
 	public function __construct(Request $request) {
-		$this->host = $request->getHost();
+		$this->request = $request;
 	}
 
-	public function launch($handlerClass, $pattern) {
-		if (fnmatch($pattern, $this->host)) {
+	public function setSuperDomain($superDomain){
+		$this->superDomain = $superDomain;
+	}
+
+	public function launch($pattern, $handlerClass) {
+		if (fnmatch($pattern.$this->superDomain, $this->request->getHost())) {
 			/** @var WebApp $handler */
 			$handler = ServiceContainer::get($handlerClass);
 			$handler->run();
+		}
+	}
+
+	public function reroute($pattern, $target) {
+		if (fnmatch($pattern.$this->superDomain, $this->request->getHost())) {
+			$url = 'http://'.$target.$this->request->getPathInfo().($this->request->getQueryString() ? '?'.$this->request->getQueryString() : '');
+			header('location:'.$url);
 		}
 	}
 

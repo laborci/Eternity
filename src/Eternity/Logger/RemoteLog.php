@@ -4,7 +4,7 @@ use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\SharedService;
 use Symfony\Component\HttpFoundation\Request;
 
-class RemoteLog implements LoggerInterface, SharedService {
+class RemoteLog implements LoggerInterface, ErrorHandlerRegistratorInterface, SharedService {
 
 	use Service;
 
@@ -17,8 +17,10 @@ class RemoteLog implements LoggerInterface, SharedService {
 		$this->port = $config::port();
 		$this->host = $config::host() . '/';
 		$this->guid = uniqid();
-
 		$this->request = $request;
+	}
+
+	public function registerErrorHandlers(){
 		set_exception_handler([$this, 'handleException']);
 		set_error_handler(function ($severity, $message, $file, $line) { throw new \ErrorException($message, $severity, $severity, $file, $line); });
 	}

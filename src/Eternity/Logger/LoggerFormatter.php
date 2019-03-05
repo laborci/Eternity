@@ -8,7 +8,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyleInterface;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class LoggerFormatter implements OutputFormatterStyleInterface {
+class LoggerFormatterDeprecated implements OutputFormatterStyleInterface {
 
 	const fg_default = '39';
 	const fg_black = '30';

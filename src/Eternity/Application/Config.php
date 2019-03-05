@@ -3,7 +3,7 @@
 use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\SharedService;
 
-class Config implements \ArrayAccess, SharedService {
+class ConfigDeprecated implements \ArrayAccess, SharedService {
 
 	use Service;
 

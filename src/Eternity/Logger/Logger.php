@@ -4,7 +4,7 @@ use Eternity\ServiceManager\Service;
 use Eternity\ServiceManager\SharedService;
 use Symfony\Component\HttpFoundation\Request;
 
-class Logger implements SharedService {
+class LoggerDeprecated implements SharedService {
 
 	use Service;
 
