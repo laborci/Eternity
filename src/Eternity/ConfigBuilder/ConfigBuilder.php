@@ -14,7 +14,7 @@ class ConfigBuilder {
 
 
 	protected function addValue($name, $value) { $this->values[str_replace('-', '_', $name)] = $value; }
-	protected function addSet($name, array $values) {
+	protected function addSet($name, $values) {
 		$set = [];
 		foreach ($values as $key => $value) $set[str_replace('-', '_', $key)] = $value;
 		$this->sets[str_replace('-', '_', $name)] = $set;
@@ -42,7 +42,7 @@ class ConfigBuilder {
 
 		foreach ($this->sets as $key => $set) {
 			echo "\n";
-			echo "class cfg_$key ".(array_key_exists('interface', $set) ? "implements \\". $set['interface'] : '')."{" . "\n";
+			echo "class cfg_$key ".(array_key_exists('interface', $set) && $set['interface'] ? "implements \\". $set['interface'] : '')."{" . "\n";
 			if(array_key_exists('value', $set)) foreach ($set['value'] as $datakey => $data) {
 				echo "\tstatic public function ".str_replace('-', '_', $datakey)."(){ return " . var_export($data, true) . "; }" . "\n";
 			}
