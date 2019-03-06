@@ -1,5 +1,6 @@
 <?php namespace Eternity\Application;
 
+use Eternity\Routing\Router;
 use Eternity\ServiceManager\{Service, SharedService};
 
 
@@ -7,5 +8,16 @@ abstract class WebSite implements SharedService{
 
 	use Service;
 
-	abstract public function run();
+	protected $router;
+
+	public function __construct(Router $router) {
+		session_start();
+		$this->router = $router;
+	}
+
+	public function run(){
+		$this->route($this->router);
+	}
+
+	abstract protected function route(Router $router);
 }
