@@ -12,7 +12,7 @@ class GenerateVhost extends Command {
 	protected function configure() {
 		$this
 			->setName('generate-vhost')
-			->setAliases(['gv'])
+			->setAliases(['vhost'])
 			->setDescription('Generates vhost config file from the template');
 	}
 

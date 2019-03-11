@@ -4,7 +4,7 @@ use Eternity\Logger\ErrorHandlerRegistratorInterface;
 use Eternity\Router\DomainRouter;
 use Eternity\ServiceManager\{Service, SharedService};
 
-abstract class WebApp implements SharedService {
+class WebApp implements SharedService {
 
 	use Service;
 
@@ -15,8 +15,8 @@ abstract class WebApp implements SharedService {
 		$this->domainRouter = $domainRouter;
 	}
 
-	abstract protected function route(\Eternity\Routing\DomainRouter $domainRouter);
+	public function router() { return $this->domainRouter; }
 
-	public function run(){ $this->route($this->domainRouter); }
+	public function run() { }
 
 }

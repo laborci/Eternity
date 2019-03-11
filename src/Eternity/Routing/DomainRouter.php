@@ -11,29 +11,48 @@ class DomainRouter implements SharedService {
 	use Service;
 
 	protected $request;
-	protected $superDomain = '';
+	protected $domain = '';
 
 	public function __construct(Request $request) {
 		$this->request = $request;
 	}
 
-	public function setSuperDomain($superDomain){
-		$this->superDomain = $superDomain;
+	public function setDomain($domain){
+		$this->domain = $domain;
+		return $this;
 	}
 
+	/** @return $this */
 	public function launch($pattern, $handlerClass) {
-		if (fnmatch($pattern.$this->superDomain, $this->request->getHost())) {
-			/** @var WebApp $handler */
+		if ($this->match($pattern)) {
+			/** @var \Eternity\Application\WebSite $handler */
 			$handler = ServiceContainer::get($handlerClass);
 			$handler->run();
+			die();
 		}
+		return $this;
 	}
 
+	/** @return $this */
 	public function reroute($pattern, $target) {
-		if (fnmatch($pattern.$this->superDomain, $this->request->getHost())) {
-			$url = 'http://'.$target.$this->request->getPathInfo().($this->request->getQueryString() ? '?'.$this->request->getQueryString() : '');
-			header('location:'.$url);
+		if ($this->match($pattern)) {
+			$url = 'http://' . $target . $this->request->getPathInfo() . ($this->request->getQueryString() ? '?' . $this->request->getQueryString() : '');
+			if (is_callable($target)) {
+				header('location:' . $target($this->request));
+			} else {
+				header('location:' . $url);
+			}
+			die();
 		}
+		return $this;
+	}
+
+	protected function match($pattern){
+		if($pattern === '.' || $pattern === '' || is_null($pattern)) $pattern = $this->domain;
+		if(substr($pattern,-1) === '.') $pattern .= $this->domain;
+
+
+		return fnmatch($pattern, $this->request->getHost());
 	}
 
 }

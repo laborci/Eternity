@@ -2,10 +2,10 @@
 
 class ConfigSegment implements \ArrayAccess {
 
-	public $env = [], $value = [], $interface = null;
+	public $env = [], $value = [], $interface = null, $config;
 
-	public function __construct(string $interface = null) {
-		$this->interface = $interface;
+	public function __construct(string $config = null) {
+		$this->config = $config;
 	}
 
 	function interface(string $interface) {

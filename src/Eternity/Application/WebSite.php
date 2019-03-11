@@ -17,6 +17,7 @@ abstract class WebSite implements SharedService{
 
 	public function run(){
 		$this->route($this->router);
+		die();
 	}
 
 	abstract protected function route(Router $router);

@@ -16,7 +16,7 @@ class Updater {
 		$style = new SymfonyStyle($input, $output);
 
 		$style->title('Updating all entites');
-		$folders = glob(getenv('ROOT') . '/'.Config::entity_generator()::path().'*');
+		$folders = glob(Config::entity_generator()::path().'*');
 		foreach ($folders as $folder) {
 			if (is_dir($folder)) {
 				$name = basename($folder);

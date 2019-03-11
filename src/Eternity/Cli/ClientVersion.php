@@ -11,7 +11,7 @@ class Clientversion extends Command {
 	protected function configure() {
 		$this
 			->setName('clientversion')
-			->setAliases(['cv'])
+			->setAliases(['cver'])
 			->setDescription('Creates/Increments var/clientversion');
 	}
 
@@ -19,10 +19,11 @@ class Clientversion extends Command {
 
 		$style = new SymfonyStyle($input, $output);
 
-		$file = getenv('ROOT').'/var/clientversion';
+		$file = env('PROJECT-INI')['SMARTPAGE-RESPONDER-CLIENT-VERSION'];
 		if(!file_exists($file))$version = 0;
 		else $version = file_get_contents($file);
 		file_put_contents($file, ++$version);
+
 		$style->success('Version: ' . $version);
 	}
 

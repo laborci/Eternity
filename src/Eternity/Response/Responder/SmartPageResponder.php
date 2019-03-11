@@ -39,7 +39,7 @@ abstract class SmartPageResponder extends TwigPageResponder {
 		return [
 			'clientversion' => $this->config::client_version(),
 			'title'         => $this->title ? $this->title : $this->annotations->get('title'),
-			'language'      => $this->language ? $this->language : $this->annotations->get('language', getenv('LANGUAGE')),
+			'language'      => $this->language ? $this->language : $this->annotations->get('language', env('LANGUAGE')),
 			'bodyclass'     => $this->bodyclass ? $this->bodyclass : $this->annotations->get('bodyclass'),
 			'css'           => $this->annotations->getAsArray('css'),
 			'js'            => $this->annotations->getAsArray('js'),

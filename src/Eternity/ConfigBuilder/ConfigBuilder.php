@@ -3,32 +3,35 @@
 
 class ConfigBuilder {
 
-	protected $values = [];
 	protected $sets = [];
-	protected $envloaders = [];
 
-	public function __construct($config) {
-		foreach ($config['values'] as $key=>$value) $this->addValue($key, $value);
-		foreach ($config['sets'] as $key=>$value) $this->addSet($key, $value);
+	public function __construct($configurations) {
+
+		$files = glob($configurations.'/*.php');
+		foreach ($files as $file){
+			if(is_file($file)){
+				/** @var \Eternity\ConfigBuilder\ConfigSegment $set */
+				$set = include $file;
+				$name = $set->config;
+				if(is_null($name))$name = pathinfo($file)['filename'];
+				$this->addSet($name, $set);
+			}
+		}
 	}
 
 
-	protected function addValue($name, $value) { $this->values[str_replace('-', '_', $name)] = $value; }
 	protected function addSet($name, $values) {
 		$set = [];
 		foreach ($values as $key => $value) $set[str_replace('-', '_', $key)] = $value;
 		$this->sets[str_replace('-', '_', $name)] = $set;
 	}
 
-	public function build($path) {
+	public function build($outputfile, $namespace, $class) {
 		ob_start();
 
-		echo "<?php namespace Application;" . "\n\n";
-		echo "class Config{" . "\n";
-		foreach ($this->values as $key => $value) {
-			//echo "\tconst $key = " . var_export($value, true) . ";" . "\n";
-			echo "\tstatic public function $key(){ return " . var_export($value, true) . ";}" . "\n";
-		}
+		echo "<?php namespace $namespace;" . "\n\n";
+		echo "class $class{" . "\n";
+
 		foreach ($this->sets as $key => $value) {
 			echo "\n";
 			echo "\tstatic protected \$cfg_$key;" . "\n";
@@ -51,12 +54,12 @@ class ConfigBuilder {
 				else{
 
 				}
-				echo "\tstatic public function " . $datakey . "(){ return getenv('" . strtoupper($envkey) . "'); }" . "\n";
+				echo "\tstatic public function " . $datakey . "(){ return env('" . strtoupper($envkey) . "'); }" . "\n";
 			}
 			echo "}" . "\n";
 		}
 
 		$output = ob_get_clean();
-		file_put_contents($path.'/Config.php', $output);
+		file_put_contents($outputfile, $output);
 	}
 }

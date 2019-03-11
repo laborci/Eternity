@@ -18,8 +18,9 @@ class NodeChanges extends Command {
 		$style = new SymfonyStyle($input, $output);
 
 		$style->title('Looking for changes');
-		$folders = glob(getenv('ROOT') . '/node_modules/'.$input->getArgument('pattern'));
+		$folders = glob(env('ROOT') . '/node_modules/'.$input->getArgument('pattern'));
 		foreach ($folders as $folder) {
+			echo $folder;
 			if (is_dir($folder)) {
 				chdir($folder);
 				echo exec("publish-diff --filter='lib/**'", $output);

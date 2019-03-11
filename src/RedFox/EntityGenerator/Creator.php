@@ -32,8 +32,8 @@ class Creator {
 		$this->output = new SymfonyStyle($input, $output);
 		$this->output->writeln('::: '.$name.' :::');
 
-		$root = getenv('ROOT');
-		$entityDirectory = $root . '/'. Config::entity_generator()::path() . $name;
+		$root = env('ROOT');
+		$entityDirectory = $this->config::path() . $name;
 		$entityHelperDirectory = $entityDirectory . '/Helpers';
 		$templateDirectory = __DIR__ . '/templates';
 		$templateHelperDirectory = $templateDirectory . '/Helpers';
