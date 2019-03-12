@@ -34,6 +34,7 @@ class StartupSequence{
 		date_default_timezone_set(env('TIMEZONE') ?? env('PROJECT-INI')['TIMEZONE']);
 
 		$app = env('APP');
+		if(!$app) $app = \Application\Cli\App::class;
 		$app::Service()->run();
 	}
 	
