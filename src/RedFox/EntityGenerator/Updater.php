@@ -12,11 +12,17 @@ class Updater {
 
 	use Service;
 
+	protected $config;
+
+	public function __construct(EntityGeneratorConfigInterface $config) {
+		$this->config = $config;
+	}
+
 	public function execute(InputInterface $input, OutputInterface $output, Application $application) {
 		$style = new SymfonyStyle($input, $output);
 
 		$style->title('Updating all entites');
-		$folders = glob(Config::entity_generator()::path().'*');
+		$folders = glob($this->config::path().'*');
 		foreach ($folders as $folder) {
 			if (is_dir($folder)) {
 				$name = basename($folder);
