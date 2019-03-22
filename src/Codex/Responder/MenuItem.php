@@ -12,14 +12,16 @@ class MenuItem {
 	}
 
 	public function addList($label, $icon, $url) {
-		$item = $this->addItem($label, $icon, 'list');
+		$item = ['label' => $label, 'icon' => $icon, 'action' => 'list', 'options'=>[]];
 		$item[ 'options' ][ 'url' ] = $url;
 		$this->items[] = $item;
 		return $this;
 	}
 
-	protected function addItem($label, $icon, $action) {
-		return [ 'label' => $label, 'icon' => $icon, 'action' => $action, 'options' => [] ];
+	public function addItem($label, $icon, $action, $options = []) {
+		$item = ['label' => $label, 'icon' => $icon, 'action' => $action, 'options' => $options ];
+		$this->items[] = $item;
+		return $this;
 	}
 
 	public function get() {

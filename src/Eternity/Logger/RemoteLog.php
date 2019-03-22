@@ -20,6 +20,8 @@ class RemoteLog implements LoggerInterface, ErrorHandlerRegistratorInterface, Sh
 	}
 
 	public function registerErrorHandlers() {
+		error_reporting(E_ALL ^ E_DEPRECATED);
+
 		set_exception_handler([ $this, 'handleException' ]);
 		set_error_handler(function ($severity, $message, $file, $line) { throw new \ErrorException($message, $severity, $severity, $file, $line); });
 	}
