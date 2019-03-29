@@ -11,7 +11,7 @@ abstract class JsonResponder extends Segment {
 		}
 		$response = $this->getResponse();
 		$response->headers->set('Content-Type', 'application/json');
-		$response->setContent(json_encode($this->$method(), JSON_UNESCAPED_UNICODE));
+		$response->setContent(json_encode($this->$method(), JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
 		$this->next();
 	}
 

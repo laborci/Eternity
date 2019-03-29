@@ -37,7 +37,7 @@ class StartupSequence{
 		if(!$app) $app = \Application\Cli\App::class;
 		$app::Service()->run();
 	}
-	
+
 //
 //	public function cli($CLIAPP){
 //		if (env('CONTEXT') === 'CLI'){
