@@ -84,6 +84,7 @@ abstract class AbstractFinder {
 	}
 
 	abstract public function fetch($fetchmode = \PDO::FETCH_ASSOC):array ;
+	abstract public function fetchAll($fetchmode = \PDO::FETCH_ASSOC):array ;
 
 	protected function pickRecord() {
 		$records = $this->collectRecords(1, null);

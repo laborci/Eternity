@@ -42,4 +42,9 @@ class MysqlFinder extends AbstractFinder {
 	public function fetch($fetchmode = \PDO::FETCH_ASSOC):array {
 		return $this->connection->query($this->buildSQL())->fetch($fetchmode);
 	}
+
+
+	public function fetchAll($fetchmode = \PDO::FETCH_ASSOC):array {
+		return $this->connection->query($this->buildSQL())->fetchAll($fetchmode);
+	}
 }
