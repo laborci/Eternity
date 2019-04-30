@@ -28,6 +28,7 @@ abstract class Repository {
 	}
 
 	public function getConnection(): \RedFox\Database\PDOConnection\AbstractPDOConnection { return $this->connection; }
+	public function getTable(){ return $this->table; }
 	private function addToCache(Entity $object) { $this->cache->add($object, $object->id); }
 
 	/** @return Entity */

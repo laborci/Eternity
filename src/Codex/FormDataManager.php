@@ -77,7 +77,7 @@ class FormDataManager {
 		$item->setDTO($data);
 	}
 
-	protected function persist(Entity $item){
+	protected function persist(Entity $item, $data){
 		$item->save();
 		return $item->id;
 	}
@@ -98,7 +98,7 @@ class FormDataManager {
 
 		$item = $this->pick($id);
 		$this->pack($item, $data);
-		$result['id'] = $this->persist($item);
+		$result['id'] = $this->persist($item, $data);
 
 		return $result;
 	}

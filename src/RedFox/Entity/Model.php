@@ -77,11 +77,11 @@ abstract class Model {
 	protected function hasMany($name, $class, $field) {
 		$this->relations[$name] = new BackReference($class, $field);
 	}
-	protected function hasOne($name, $class, $field) {
-		$this->relations[$name] = new UniqueBackReference($class, $field);
-	}
-	protected function connectedTo($name, DataSource $dataSource, $class, $selfField, $otherField) {
-		$this->relations[$name] = new CrossReference($dataSource, $class, $selfField, $otherField);
+//	protected function hasOne($name, $class, $field) {
+//		$this->relations[$name] = new UniqueBackReference($class, $field);
+//	}
+	protected function connectedTo($name, Repository $repository, $class, $selfField, $otherField) {
+		$this->relations[$name] = new CrossReference($repository, $class, $selfField, $otherField);
 	}
 
 	public function getRelations() { return array_keys($this->relations); }

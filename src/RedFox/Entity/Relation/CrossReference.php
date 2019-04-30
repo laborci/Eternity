@@ -15,12 +15,12 @@ class CrossReference {
 	protected $selfField;
 	protected $otherField;
 
-	public function __construct(DataSource $dataSource, $class, $selfField, $otherField) {
+	public function __construct(Repository $repository, $class, $selfField, $otherField) {
 		$this->class = $class;
 		$this->selfField = $selfField;
 		$this->otherField = $otherField;
-		$this->table = $dataSource->getTable();
-		$this->access = $dataSource->getAccess();
+		$this->table = $repository->getTable();
+		$this->access = $repository->getConnection()->createSmartAccess();
 	}
 
 	public function __invoke(Entity $object) {
